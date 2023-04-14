@@ -260,6 +260,8 @@ def train(
     )
     model.config.use_cache = False
 
+#The following code will generate empty adapter_model.bin with latest PEFT. To fix it, we can comment the code and set load_best_model_at_end=False.
+# Or comment "to_return = {k: v for k, v in to_return.items() if (("lora_" in k and adapter_name in k) or ("bias" in k))}" in /site-packages/peft/utils/save_and_load.py
     old_state_dict = model.state_dict
     model.state_dict = (
         lambda self, *_, **__: get_peft_model_state_dict(
